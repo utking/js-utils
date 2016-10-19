@@ -3,7 +3,7 @@
  * Uses features: Array.isArray, filter, forEach
  */
 
-(function () {
+(function (module) {
 
     /**
      * Convert the argument into a plain array of simple strings
@@ -116,14 +116,22 @@
         });
     };
 
+
+    var _compactArray = function (items) {
+        return items.filter(function (i) {
+            return !!i;
+        });
+    };
+
     /**
      * Public interface
      */
-    return {
+    return module.exports = {
         filterHaving: _filterHaving,
         extract: _extract,
         plain: _plain,
-        addProperty: _addProperty
+        addProperty: _addProperty,
+        compactArray: _compactArray
     };
 
-})();
+})(module);

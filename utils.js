@@ -116,10 +116,22 @@
         });
     };
 
-
-    var _compactArray = function (items) {
+    /**
+     * Clear the array from null and undefined values
+     * or null and undefined field properties
+     * @param items
+     * @param field
+     * @returns {Array}
+     * @private
+     */
+    var _compactArray = function (items, field) {
         return items.filter(function (i) {
-            return !!i;
+            if (field !== undefined && field !== null) {
+                return !(i === undefined || i === null)
+                    && !(i[field] === undefined || i[field] === null);
+            } else {
+                return !(i === undefined || i === null);
+            }
         });
     };
 

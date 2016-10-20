@@ -2,7 +2,7 @@
  * Created by utking on 10/19/16.
  * Uses features: Array.isArray, filter, forEach
  */
-
+var arg = module || this;
 (function (module) {
 
     /**
@@ -106,14 +106,17 @@
      * @private
      */
     var _addProperty = function (items, fields) {
-        return items.map(function (i) {
-            for (var f in fields) {
-                if (fields.hasOwnProperty(f)) {
-                    i[f] = fields[f];
+        if (Array.isArray(items)) {
+            return items.map(function (i) {
+                for (var f in fields) {
+                    if (fields.hasOwnProperty(f)) {
+                        i[f] = fields[f];
+                    }
                 }
-            }
-            return i;
-        });
+                return i;
+            });
+        }
+        return [];
     };
 
     /**
@@ -125,14 +128,17 @@
      * @private
      */
     var _compactArray = function (items, field) {
-        return items.filter(function (i) {
-            if (field !== undefined && field !== null) {
-                return !(i === undefined || i === null)
-                    && !(i[field] === undefined || i[field] === null);
-            } else {
-                return !(i === undefined || i === null);
-            }
-        });
+        if (Array.isArray(items)) {
+            return items.filter(function (i) {
+                if (field !== undefined && field !== null) {
+                    return !(i === undefined || i === null)
+                        && !(i[field] === undefined || i[field] === null);
+                } else {
+                    return !(i === undefined || i === null);
+                }
+            });
+        }
+        return [];
     };
 
     /**
@@ -146,4 +152,4 @@
         compactArray: _compactArray
     };
 
-})(module);
+})(arg);

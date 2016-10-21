@@ -142,6 +142,22 @@ var arg = module || this;
     };
 
     /**
+     * Sum field values of the objects in the items array
+     * @param items - an array of objects
+     * @param field - property name string
+     * @returns {Number}
+     * @private
+     */
+    var _sumBy = function (items, field) {
+        if (Array.isArray(items) && field.charAt && !!field) {
+            return items.reduce(function (prev, i) {
+                return prev + Number(i[field]);
+            }, 0);
+        }
+        return 0;
+    };
+
+    /**
      * Public interface
      */
     return module.exports = {
@@ -149,7 +165,8 @@ var arg = module || this;
         extract: _extract,
         plain: _plain,
         addProperty: _addProperty,
-        compactArray: _compactArray
+        compactArray: _compactArray,
+        sumBy: _sumBy
     };
 
 })(arg);

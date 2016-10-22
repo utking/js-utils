@@ -63,7 +63,7 @@ var arg = module || this;
     };
 
     /**
-     * Return an array that contains only the specified properties
+     * Return an array that contains only the objects having the specified properties
      * @param items - array of objects
      * @param fields - desired properties
      * @returns {Array}
@@ -90,7 +90,7 @@ var arg = module || this;
      */
     var _plain = function (items, field) {
         var _result = [];
-        if (field.charAt && Array.isArray(items)) {
+        if (!!field && field.charAt && Array.isArray(items)) {
             items.forEach(function (i) {
                 _result.push(i[field]);
             });
@@ -149,7 +149,7 @@ var arg = module || this;
      * @private
      */
     var _sumBy = function (items, field) {
-        if (Array.isArray(items) && field.charAt && !!field) {
+        if (Array.isArray(items) && !!field && field.charAt) {
             return items.reduce(function (prev, i) {
                 return prev + Number(i[field]);
             }, 0);

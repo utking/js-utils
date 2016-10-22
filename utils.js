@@ -2,8 +2,8 @@
  * Created by utking on 10/19/16.
  * Uses features: Array.isArray, filter, forEach
  */
-var arg = module || this;
-(function (module) {
+var arg = this;
+var lib = (function (module) {
 
     /**
      * Convert the argument into a plain array of simple strings

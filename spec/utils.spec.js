@@ -1,4 +1,8 @@
-let items = [
+if (!this.navigator) {
+  var lib = require('../utils');
+}
+
+var items = [
   {
     name: 'Utkin',
     age: 35

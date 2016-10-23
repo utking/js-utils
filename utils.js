@@ -3,6 +3,9 @@
  * Uses features: Array.isArray, filter, forEach
  */
 var arg = this;
+if (!this.navigator) {
+    arg = module;
+}
 var lib = (function (module) {
 
     /**

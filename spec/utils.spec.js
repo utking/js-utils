@@ -33,6 +33,9 @@ describe("Check Utils.js", function () {
   });
     
   describe("filterHaving checks", function () {
+    it("filterHaving() on empty array length = 0", function () {
+      expect(lib.filterHaving().length).toEqual(0);
+    });
     it("filterHaving() length = 0", function () {
       expect(lib.filterHaving(items).length).toEqual(0);
     });
@@ -45,6 +48,18 @@ describe("Check Utils.js", function () {
   });
 
   describe("extract checks", function () {
+    it("extract(salary) without arguments length = 0", function () {
+      expect(lib.filterHaving().length).toEqual(0);
+    });
+    it("extract(salary) with just a field argument length = 0", function () {
+      expect(lib.filterHaving('salary').length).toEqual(0);
+    });
+    it("extract(salary) on empty array length = 0", function () {
+      expect(lib.filterHaving([], 'salary').length).toEqual(0);
+    });
+    it("extract(salary) without field length = 0", function () {
+      expect(lib.filterHaving([]).length).toEqual(0);
+    });
     it("extract(salary) length = 1", function () {
       expect(lib.filterHaving(items, 'salary').length).toEqual(1);
     });
@@ -60,6 +75,9 @@ describe("Check Utils.js", function () {
   });
 
   describe("plain checks", function () {
+    it("plain(name) on empty array length = 0", function () {
+      expect(lib.plain().length).toEqual(0);
+    });
     it("plain(name) length = 4", function () {
       expect(lib.plain(items, 'name').length).toEqual(4);
     });
@@ -81,6 +99,9 @@ describe("Check Utils.js", function () {
   });
 
   describe("sumBy checks", function () {
+    it("sumBy() on empty array == 0", function () {
+      expect(lib.sumBy()).toEqual(0);
+    });
     it("sumBy() == 0", function () {
       expect(lib.sumBy(items)).toEqual(0);
     });
@@ -96,6 +117,9 @@ describe("Check Utils.js", function () {
   });
 
   describe("addProperty checks", function () {
+    it("addProperty() on empty array length == 0", function () {
+      expect(lib.filterHaving(lib.addProperty(), 'zip').length).toEqual(0);
+    });
     it("addProperty(items,undefined) length == 0", function () {
       expect(lib.filterHaving(lib.addProperty(items), 'zip').length).toEqual(0);
     });

@@ -28,6 +28,20 @@ var newProperty = {
 
 var emptyStrings = ["", "    ", null, undefined];
 var nonEmptyStrings = ["a", "  a  "];
+var trimStrings = [
+  {
+    src: "abc",
+    test: "abc"
+  },
+  {
+    src: "  abc ",
+    test: "abc"
+  },
+  {
+    src: "  _  abc  ; ",
+    test: "_  abc  ;"
+  }
+];
 
 describe("Check Utils.js", function () {
   beforeEach(function () {
@@ -150,6 +164,11 @@ describe("lib.String", function () {
   it("is not empty", function () {
     nonEmptyStrings.forEach(function (s) {
       expect(lib.String.isEmpty(s)).toBeFalsy();
+    });
+  });
+  it("is not empty", function () {
+    trimStrings.forEach(function (s) {
+      expect(lib.String.trim(s.src)).toEqual(s.test);
     });
   });
 });

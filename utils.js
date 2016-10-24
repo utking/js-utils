@@ -164,8 +164,16 @@ var lib = (function (module) {
         _isEmpty: function (str) {
             return str === null || str === undefined
                 || !(/^.*\w+.*$/.test(str));
+        },
+        _trim: function (str) {
+            var trimRegExp = /^\s*([\w+:;<=>?@\[\]^_`{|}~].*[\w+:;<=>?@\[\]^_`{|}~])\s*$/;
+            var result = trimRegExp.exec(str);
+            if (result === null || str === null || str === undefined) {
+                return "";
+            }
+            return result[1] ? result[1] : "";
         }
-    }
+    };
 
     /**
      * Public interface
@@ -179,7 +187,8 @@ var lib = (function (module) {
         sumBy: _sumBy,
 
         String: {
-            isEmpty: StringLib._isEmpty
+            isEmpty: StringLib._isEmpty,
+            trim: StringLib._trim
         }
     };
 

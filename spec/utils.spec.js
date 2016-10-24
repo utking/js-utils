@@ -26,6 +26,9 @@ var newProperty = {
   zip: '680009'
 };
 
+var emptyStrings = ["", "    ", null, undefined];
+var nonEmptyStrings = ["a", "  a  "];
+
 describe("Check Utils.js", function () {
   beforeEach(function () {
     expect(items.length).toEqual(4);
@@ -136,4 +139,17 @@ describe("Check Utils.js", function () {
     });
   });
 
+});
+
+describe("lib.String", function () {
+  it("is empty", function () {
+    emptyStrings.forEach(function (s) {
+      expect(lib.String.isEmpty(s)).toBeTruthy();
+    });
+  });
+  it("is not empty", function () {
+    nonEmptyStrings.forEach(function (s) {
+      expect(lib.String.isEmpty(s)).toBeFalsy();
+    });
+  });
 });

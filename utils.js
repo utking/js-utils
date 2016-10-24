@@ -160,6 +160,13 @@ var lib = (function (module) {
         return 0;
     };
 
+    var StringLib = {
+        _isEmpty: function (str) {
+            return str === null || str === undefined
+                || !(/^.*\w+.*$/.test(str));
+        }
+    }
+
     /**
      * Public interface
      */
@@ -169,7 +176,11 @@ var lib = (function (module) {
         plain: _plain,
         addProperty: _addProperty,
         compactArray: _compactArray,
-        sumBy: _sumBy
+        sumBy: _sumBy,
+
+        String: {
+            isEmpty: StringLib._isEmpty
+        }
     };
 
 })(arg);

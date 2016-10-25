@@ -42,6 +42,24 @@ var trimStrings = [
     test: "_  abc  ;"
   }
 ];
+var sparseStrings = [
+  {
+    src: " a   b    c     d       .",
+    test: "a b c d ."
+  },
+  {
+    src: "abc",
+    test: "abc"
+  },
+  {
+    src: null,
+    test: ""
+  },
+  {
+    src: undefined,
+    test: ""
+  }
+];
 
 describe("Check Utils.js", function () {
   beforeEach(function () {
@@ -166,9 +184,14 @@ describe("lib.String", function () {
       expect(lib.String.isEmpty(s)).toBeFalsy();
     });
   });
-  it("is not empty", function () {
+  it("trimming", function () {
     trimStrings.forEach(function (s) {
       expect(lib.String.trim(s.src)).toEqual(s.test);
+    });
+  });
+  it("compact by removing unwanted spaces", function () {
+    sparseStrings.forEach(function (s) {
+      expect(lib.String.compact(s.src)).toEqual(s.test);
     });
   });
 });

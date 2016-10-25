@@ -172,6 +172,32 @@ var lib = (function (module) {
                 return "";
             }
             return result[1] ? result[1] : "";
+        },
+        /**
+         * Remove unwanted spaces
+         * @param str
+         * @returns {String}
+         * @private
+         */
+        _compact: function (str) {
+            if (str === null || str === undefined || !str.charAt) {
+                return "";
+            }
+            if (Array.prototype.filter) {
+                return str.split(" ").filter(function (s) {
+                    return s !== "";
+                }).join(" ");
+            } else {
+                // Use polyfill if there is no Array.prototype.filter
+                var items = str.split(" ");
+                var result = [];
+                for (var i = 0; i < items.length; i++) {
+                    if (items[i] !== "") {
+                        result.push(items[i]);
+                    }
+                }
+                return result.join(" ");
+            }
         }
     };
 
@@ -188,7 +214,8 @@ var lib = (function (module) {
 
         String: {
             isEmpty: StringLib._isEmpty,
-            trim: StringLib._trim
+            trim: StringLib._trim,
+            compact: StringLib._compact
         }
     };
 

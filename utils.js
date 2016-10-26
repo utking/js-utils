@@ -201,6 +201,41 @@ var lib = (function (module) {
         }
     };
 
+    var SortLib = {
+        _merge: function (arr) {
+            if (!arr || !Array.isArray(arr)) {
+                return [];
+            }
+            var len = arr.length;
+            if (len === 1) {
+                return arr;
+            }
+            var halfLen = Math.round(len / 2);
+            var lar = SortLib._merge(arr.slice(0, halfLen));
+            var rar = SortLib._merge(arr.slice(halfLen));
+            var result = [], i1, i2;
+            while (lar.length && rar.length) {
+                i1 = lar.shift();
+                i2 = rar.shift();
+
+                if (i1 < i2) {
+                    result.push(i1);
+                    rar.unshift(i2);
+                } else {
+                    result.push(i2);
+                    lar.unshift(i1);
+                }
+            }
+            while (lar.length) {
+                result.push(lar.shift());
+            }
+            while (rar.length) {
+                result.push(rar.shift());
+            }
+            return result;
+        }
+    };
+
     /**
      * Public interface
      */
@@ -216,6 +251,10 @@ var lib = (function (module) {
             isEmpty: StringLib._isEmpty,
             trim: StringLib._trim,
             compact: StringLib._compact
+        },
+
+        Sort: {
+            merge: SortLib._merge
         }
     };
 

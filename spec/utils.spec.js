@@ -61,6 +61,18 @@ var sparseStrings = [
   }
 ];
 
+var arrays = [
+    {
+        src: [7, 1, 3, 6, 5, 4, 2, 8],
+        test: [1, 2, 3, 4, 5, 6, 7, 8]
+    },
+    {
+        src: [7, 1, 3, 6, 5, 1, 2, 8],
+        test: [1, 1, 2, 3, 5, 6, 7, 8]
+    }
+];
+
+
 describe("Check Utils.js", function () {
   beforeEach(function () {
     expect(items.length).toEqual(4);
@@ -194,4 +206,17 @@ describe("lib.String", function () {
       expect(lib.String.compact(s.src)).toEqual(s.test);
     });
   });
+});
+
+describe("lib.Sort", function () {
+    it("sort empty array", function () {
+        emptyStrings.forEach(function (s) {
+            expect(lib.String.isEmpty(s)).toBeTruthy();
+        });
+    });
+    it("sort array", function () {
+        arrays.forEach(function (a) {
+            expect(lib.Sort.merge(a.src)).toEqual(a.test);
+        });
+    });
 });

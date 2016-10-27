@@ -78,7 +78,7 @@ describe("Check Utils.js", function () {
     expect(items.length).toEqual(4);
     expect(lib.filterHaving(items, 'salary').length).toEqual(1);
   });
-    
+
   describe("filterHaving checks", function () {
     it("filterHaving() on empty array length = 0", function () {
       expect(lib.filterHaving().length).toEqual(0);
@@ -209,14 +209,19 @@ describe("lib.String", function () {
 });
 
 describe("lib.Sort", function () {
-    it("sort empty array", function () {
-        emptyStrings.forEach(function (s) {
-            expect(lib.String.isEmpty(s)).toBeTruthy();
-        });
+  it("sort empty array", function () {
+    emptyStrings.forEach(function (s) {
+      expect(lib.String.isEmpty(s)).toBeTruthy();
     });
-    it("sort array", function () {
-        arrays.forEach(function (a) {
-            expect(lib.Sort.merge(a.src)).toEqual(a.test);
-        });
+  });
+  it("merge sort array", function () {
+    arrays.forEach(function (a) {
+      expect(lib.Sort.merge(a.src)).toEqual(a.test);
     });
+  });
+  it("select sort array", function () {
+    arrays.forEach(function (a) {
+      expect(lib.Sort.select(a.src)).toEqual(a.test);
+    });
+  });
 });

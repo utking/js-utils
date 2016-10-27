@@ -233,6 +233,31 @@ var lib = (function (module) {
                 result.push(rar.shift());
             }
             return result;
+        },
+
+        _select: function (arr) {
+            if (!arr || !Array.isArray(arr)) {
+                return [];
+            }
+            var result = arr.slice();
+            var el1, el2, min, minElPos,
+                i, j, len = result.length;
+            for (i = 0; i < len - 1; i++) {
+                min = el1 = result[i];
+                minElPos = i;
+                for (j = i + 1; j < len; j++) {
+                    el2 = result[j];
+                    if (el2 < min) {
+                        min = el2;
+                        minElPos = j;
+                    }
+                }
+                if (i !== minElPos) {
+                    result[minElPos] = el1;
+                    result[i] = min;
+                }
+            }
+            return result;
         }
     };
 
@@ -254,7 +279,8 @@ var lib = (function (module) {
         },
 
         Sort: {
-            merge: SortLib._merge
+            merge: SortLib._merge,
+            select : SortLib._select
         }
     };
 

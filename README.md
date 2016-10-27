@@ -18,6 +18,11 @@ Strings:
 - **trim**: Remove leading and tailing spaces
 - **compact**: Remove repeated spaces in a string
 
+Sort:
+
+- **merge**: Merge sort
+- **select**: Select sort
+
 ## License
 
 Mozilla Public License Version 2.0

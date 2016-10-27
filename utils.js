@@ -207,7 +207,7 @@ var lib = (function (module) {
                 return [];
             }
             var len = arr.length;
-            if (len === 1) {
+            if (len <= 1) {
                 return arr;
             }
             var halfLen = Math.round(len / 2);

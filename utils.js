@@ -240,21 +240,21 @@ var lib = (function (module) {
                 return [];
             }
             var result = arr.slice();
-            var el1, el2, min, minElPos,
+            var el1, el2, minElPos,
                 i, j, len = result.length;
             for (i = 0; i < len - 1; i++) {
-                min = el1 = result[i];
+                el1 = result[i];
                 minElPos = i;
                 for (j = i + 1; j < len; j++) {
                     el2 = result[j];
-                    if (el2 < min) {
-                        min = el2;
+                    if (el2 < result[minElPos]) {
                         minElPos = j;
                     }
                 }
                 if (i !== minElPos) {
+                    el2 = result[minElPos];
                     result[minElPos] = el1;
-                    result[i] = min;
+                    result[i] = el2;
                 }
             }
             return result;

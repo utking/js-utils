@@ -2,6 +2,9 @@
  * Created by utking on 10/19/16.
  * Uses features: Array.isArray, filter, forEach
  */
+
+'use strict';
+
 var arg = this;
 if (!this.navigator) {
     arg = module;
@@ -277,6 +280,143 @@ var lib = (function (module) {
         }
     };
 
+    var Tree = function (initialValue) {
+        var _Node = function (val, left, right) {
+            this.val = val;
+            this.left = left || null;
+            this.right = right || null;
+            this.count = 1;
+
+            return this;
+        };
+        _Node.prototype.getRight = function () {
+            return this.right;
+        };
+        _Node.prototype.getLeft = function () {
+            return this.left;
+        };
+        _Node.prototype.value = function () {
+            return this.val;
+        };
+
+        var _tree = null;
+
+        var _insertNode = function(tree, val) {
+            if (tree.value() === val) {
+                tree.count++;
+            } else if (tree.value() > val) {
+                if (!tree.getLeft()) {
+                    tree.left =  new _Node(val)
+                } else {
+                    _insertNode(tree.left, val);
+                }
+            } else if (tree.value() < val) {
+                if (!tree.getRight()) {
+                    tree.right =  new _Node(val)
+                } else {
+                    _insertNode(tree.right, val);
+                }
+            }
+        };
+
+        var _findInTree = function (tree, val) {
+            if (!tree) {
+                return false;
+            }
+            if (tree.value() === val) {
+                return true;
+            } else if (tree.value() > val) {
+                return _findInTree(tree.left, val);
+            } else if (tree.value() < val) {
+                return _findInTree(tree.right, val);
+            }
+        };
+
+        var _asArray = function (result, tree) {
+            if (!tree) {
+                return;
+            }
+            _asArray(result, tree.getLeft());
+            for (var i = 0; i < tree.count; i++) {
+                result.push(tree.value());
+            }
+            _asArray(result, tree.getRight());
+        };
+
+        var _asReverseArray = function (result, tree) {
+            if (!tree) {
+                return;
+            }
+            _asReverseArray(result, tree.getRight());
+            for (var i = 0; i < tree.count; i++) {
+                result.push(tree.value());
+            }
+            _asReverseArray(result, tree.getLeft());
+        };
+
+        Tree.prototype.addNode = function (val) {
+            if (val === undefined) {
+                return;
+            }
+            var arr = [];
+            if (!Array.isArray(val)) {
+                arr.push(val);
+            } else {
+                arr = val;
+            }
+            arr.forEach(function (item) {
+                if (!_tree) {
+                    _tree = new _Node(item);
+                } else {
+                    _insertNode(_tree, item);
+                }
+            });
+        };
+
+        Tree.prototype.valueOf = function () {
+            return 'Tree';
+        };
+
+        Tree.prototype.toString = function () {
+            return 'Tree';
+        };
+
+        Tree.prototype.find = function (val) {
+            return _findInTree(_tree, val);
+        };
+
+        Tree.prototype.asArray = function () {
+            var result = [];
+            _asArray(result, _tree);
+            return result;
+        };
+
+        Tree.prototype.asReverseArray = function () {
+            var result = [];
+            _asReverseArray(result, _tree);
+            return result;
+        };
+
+        Tree.prototype.free = function () {
+            _tree = null;
+        };
+
+        Tree.prototype.fromArray = function (arr) {
+            if (Array.isArray(arr)) {
+                Tree.prototype.free();
+                arr.forEach(function (a) {
+                    this.addNode(a);
+                }, this);
+            }
+        };
+
+        if (initialValue) {
+            Tree.prototype.addNode(initialValue);
+        }
+
+        return this;
+    };
+
     /**
      * Public interface
      */
@@ -298,7 +438,9 @@ var lib = (function (module) {
             merge: SortLib._merge,
             select : SortLib._select,
             insert: SortLib._insert
-        }
+        },
+
+        Tree: Tree
     };
 
 })(arg);

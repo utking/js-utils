@@ -234,3 +234,60 @@ describe("lib.Sort", function () {
     });
   });
 });
+
+describe("lib.Tree", function () {
+  var arr = [], test = [], reverseTest = [];
+  beforeEach(function () {
+    arr = [75, 47, 11, 76, 52, 91, 18, 88, 69, 83];
+    test = [11, 18, 47, 52, 69, 75, 76, 83, 88, 91];
+    reverseTest = [91, 88, 83, 76, 75, 69, 52, 47, 18, 11];
+  });
+  it("empty tree to empty array", function () {
+    var t = new lib.Tree();
+    emptyStrings.forEach(function (s) {
+      expect(t.asArray()).toEqual([]);
+    });
+  });
+  it("tree to array", function () {
+    var t = new lib.Tree(arr);
+    emptyStrings.forEach(function (s) {
+      expect(t.asArray()).toEqual(test);
+    });
+  });
+  it("tree to reverse array", function () {
+    var t = new lib.Tree(test);
+    emptyStrings.forEach(function (s) {
+      expect(t.asReverseArray()).toEqual(reverseTest);
+    });
+  });
+  it("allow null in tree", function () {
+    arr.push(null);
+    test.unshift(null);
+    var t = new lib.Tree(arr);
+    emptyStrings.forEach(function (s) {
+      expect(t.asArray()).toEqual(test);
+    });
+  });
+  it("does not allow undefined in tree", function () {
+    arr.push(undefined);
+    var t = new lib.Tree(arr);
+    emptyStrings.forEach(function (s) {
+      expect(t.asArray()).toEqual(test);
+    });
+  });
+  it("allow duplicaties in tree", function () {
+    arr.push(11);
+    test.unshift(11);
+    var t = new lib.Tree(arr);
+    emptyStrings.forEach(function (s) {
+      expect(t.asArray()).toEqual(test);
+    });
+  });
+  it("free'ing", function () {
+    var t = new lib.Tree(arr);
+    t.free();
+    emptyStrings.forEach(function (s) {
+      expect(t.asArray()).toEqual([]);
+    });
+  });
+});

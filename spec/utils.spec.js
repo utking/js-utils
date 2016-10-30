@@ -228,4 +228,9 @@ describe("lib.Sort", function () {
       expect(lib.Sort.select(a.src)).toEqual(a.test);
     });
   });
+  it("insertion sort array", function () {
+    arrays.forEach(function (a) {
+      expect(lib.Sort.insert(a.src)).toEqual(a.test);
+    });
+  });
 });

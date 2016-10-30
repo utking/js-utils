@@ -258,6 +258,22 @@ var lib = (function (module) {
                 }
             }
             return result;
+        },
+
+        _insert: function (arr) {
+            if (!arr || !Array.isArray(arr)) {
+                return [];
+            }
+            var result = arr.slice();
+            var i, j, tmp, len = result.length;
+            for (i = 1; i < len; i++) {
+                tmp = result[i];
+                for (j = i-1; j > -1 && result[j] > tmp; j--) {
+                    result[j+1] = result[j];
+                }
+                result[j+1] = tmp;
+            }
+            return result;
         }
     };
 
@@ -280,7 +296,8 @@ var lib = (function (module) {
 
         Sort: {
             merge: SortLib._merge,
-            select : SortLib._select
+            select : SortLib._select,
+            insert: SortLib._insert
         }
     };
 

@@ -204,10 +204,17 @@ var lib = (function (module) {
         }
     };
 
+    var _defaultLessCompare = function (a, b) {
+        return a < b;
+    };
+
     var SortLib = {
-        _merge: function (arr) {
+        _merge: function (arr, lessComp) {
             if (!arr || !Array.isArray(arr)) {
                 return [];
+            }
+            if (typeof(lessComp) !== 'function') {
+                lessComp = _defaultLessCompare;
             }
             var len = arr.length;
             if (len <= 1) {
@@ -221,7 +228,7 @@ var lib = (function (module) {
                 i1 = lar.shift();
                 i2 = rar.shift();
 
-                if (i1 < i2) {
+                if (lessComp(i1, i2)) {
                     result.push(i1);
                     rar.unshift(i2);
                 } else {
@@ -238,9 +245,12 @@ var lib = (function (module) {
             return result;
         },
 
-        _select: function (arr) {
+        _select: function (arr, lessComp) {
             if (!arr || !Array.isArray(arr)) {
                 return [];
+            }
+            if (typeof(lessComp) !== 'function') {
+                lessComp = _defaultLessCompare;
             }
             var result = arr.slice();
             var el1, el2, minElPos,
@@ -250,7 +260,7 @@ var lib = (function (module) {
                 minElPos = i;
                 for (j = i + 1; j < len; j++) {
                     el2 = result[j];
-                    if (el2 < result[minElPos]) {
+                    if (lessComp(el2, result[minElPos])) {
                         minElPos = j;
                     }
                 }
@@ -263,15 +273,18 @@ var lib = (function (module) {
             return result;
         },
 
-        _insert: function (arr) {
+        _insert: function (arr, lessComp) {
             if (!arr || !Array.isArray(arr)) {
                 return [];
+            }
+            if (typeof(lessComp) !== 'function') {
+                lessComp = _defaultLessCompare;
             }
             var result = arr.slice();
             var i, j, tmp, len = result.length;
             for (i = 1; i < len; i++) {
                 tmp = result[i];
-                for (j = i-1; j > -1 && result[j] > tmp; j--) {
+                for (j = i-1; j > -1 && lessComp(tmp, result[j]); j--) {
                     result[j+1] = result[j];
                 }
                 result[j+1] = tmp;

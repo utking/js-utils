@@ -223,14 +223,29 @@ describe("lib.Sort", function () {
       expect(lib.Sort.merge(a.src)).toEqual(a.test);
     });
   });
+  it("merge sort array with custom comparator", function () {
+    arrays.forEach(function (a) {
+      expect(lib.Sort.merge(a.src, function (a,b) { return a < b; } )).toEqual(a.test);
+    });
+  });
   it("select sort array", function () {
     arrays.forEach(function (a) {
       expect(lib.Sort.select(a.src)).toEqual(a.test);
     });
   });
+  it("select sort array with custome comparator", function () {
+    arrays.forEach(function (a) {
+      expect(lib.Sort.select(a.src, function (a,b) { return a < b; } )).toEqual(a.test);
+    });
+  });
   it("insertion sort array", function () {
     arrays.forEach(function (a) {
       expect(lib.Sort.insert(a.src)).toEqual(a.test);
+    });
+  });
+  it("insertion sort array with custome comparator", function () {
+    arrays.forEach(function (a) {
+      expect(lib.Sort.insert(a.src, function (a,b) { return a < b; } )).toEqual(a.test);
     });
   });
 });

@@ -11,7 +11,7 @@ Arrays:
 - **plain**: Return a plain array collected by the field property
 - **addProperty**: Add property/properties specified in the fields argument
 - **compactArray**: Remove `undefined` and `null` values from an array 
-- **sumBy**: Calculate summa by a specified field for objects in the array
+- **sumBy**: Calculate sum by a specified field for objects in the array
 
 Strings:
 
@@ -22,6 +22,14 @@ Sort:
 
 - **merge**: Merge sort
 - **select**: Select sort
+- **insert**: Insertion sort
+
+*You can use a custom less-than comparator as the second parameter for 
+each of these sorting functions.
+
+Tree:
+
+A BST (binary search tree) implementation.
 
 ## License
 

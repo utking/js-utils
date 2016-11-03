@@ -430,6 +430,76 @@ var lib = (function (module) {
         return this;
     };
 
+    var LocalStorage = function(value) {
+        if (!value || !value.charAt) {
+            throw new Error('You should specify the basket name');
+        } else {
+            this.basket = value;
+        }
+        try {
+            window;
+            this.localStorage = localStorage;
+        } catch (e) {
+            this.localStorage = {
+                store: {},
+                getItem: function (prop, defVal) {
+                    if (this.store[prop]) {
+                        return this.store[prop];
+                    }
+                    return defVal !== undefined ? defVal : null;
+                },
+                setItem: function (prop, val) {
+                    this.store[prop] = val;
+                },
+                removeItem: function (prop) {
+                    this.store[prop] = undefined;
+                }
+            };
+        }
+        return this;
+    };
+
+    LocalStorage.prototype.set = function (prop, val) {
+        if (!this.basket) {
+            throw new Error('You should specify the basket name first');
+            return;
+        }
+        if (!prop || !prop.charAt) {
+            throw new Error('You should specify the property name');
+            return;
+        }
+        return this.localStorage.setItem(this.basket+'.'+prop, JSON.stringify(val));
+    };
+
+    LocalStorage.prototype.get = function (prop, defVal) {
+        if (!this.basket) {
+            throw new Error('You should specify the basket name first');
+            return;
+        }
+        if (!prop || !prop.charAt) {
+            throw new Error('You should specify the property name');
+            return;
+        }
+
+        var val = this.localStorage.getItem(this.basket+'.'+prop);
+        if (val === null) {
+            return defVal;
+        }
+        return JSON.parse(val);
+    };
+
+    LocalStorage.prototype.remove = function (prop) {
+        if (!this.basket) {
+            throw new Error('You should specify the basket name first');
+            return;
+        }
+        if (!prop || !prop.charAt) {
+            throw new Error('You should specify the property name');
+            return;
+        }
+        return this.localStorage.removeItem(this.basket+'.'+prop);
+    };
+
     /**
      * Public interface
      */
@@ -453,7 +523,8 @@ var lib = (function (module) {
             insert: SortLib._insert
         },
 
-        Tree: Tree
+        Tree: Tree,
+        LocalStorage: LocalStorage
     };
 
 })(arg);

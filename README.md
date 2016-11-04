@@ -31,6 +31,16 @@ Tree:
 
 A BST (binary search tree) implementation.
 
+LocalStorage:
+
+A standard localStorage wrapper allowing storing array and objects as well 
+ as primitive types
+ 
+- **c-tor**: constructor requires a name to connect all values with 
+- **get**: get value from the localStorage by name
+- **set**: put a named value in the localStorage 
+- **remove**: remove a named item from the localStorage
+
 ## License
 
 Mozilla Public License Version 2.0

@@ -437,23 +437,35 @@ var lib = (function (module) {
             this.basket = value;
         }
         try {
-            window;
-            this.localStorage = localStorage;
+            this.localStorage = window.localStorage;
         } catch (e) {
-            this.localStorage = {
-                store: {},
-                getItem: function (prop, defVal) {
-                    if (this.store[prop]) {
-                        return this.store[prop];
-                    }
-                    return defVal !== undefined ? defVal : null;
-                },
-                setItem: function (prop, val) {
-                    this.store[prop] = val;
-                },
-                removeItem: function (prop) {
-                    this.store[prop] = undefined;
+
+            var _store = {};
+
+            var _getItem = function (prop, defVal) {
+                if (_store[prop]) {
+                    return _store[prop];
                 }
+                return defVal !== undefined ? defVal : null;
+            };
+
+            var _setItem = function (prop, val) {
+                _store[prop] = val;
+            };
+
+            var _removeItem = function (prop) {
+                _store[prop] = undefined;
+            };
+
+            var _clean = function () {
+                _store = {};
+            };
+
+            this.localStorage = {
+                getItem: _getItem,
+                setItem: _setItem,
+                removeItem: _removeItem,
+                clean: _clean
             };
         }
         return this;
@@ -498,6 +510,19 @@ var lib = (function (module) {
             return;
         }
         return this.localStorage.removeItem(this.basket+'.'+prop);
+    };
+
+    LocalStorage.prototype.clean = function () {
+        var r = new RegExp('^'+this.basket+'\\.');
+        try {
+            for (var i in window.localStorage) {
+                if (r.test(i)) {
+                    this.localStorage.removeItem(i);
+                }
+            }
+        } catch (e) {
+            this.localStorage.clean();
+        }
     };
 
     /**

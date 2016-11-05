@@ -308,12 +308,18 @@ describe("lib.Tree", function () {
 });
 
 describe("lib.LocalStorage", function () {
-  var t;
+  var t = new lib.LocalStorage('tmp');
+  beforeEach(function () {
+    lib.LocalStorage.localStorage = {};
+    t = new lib.LocalStorage('tmp');
+  });
+  afterEach(function () {
+    lib.LocalStorage.localStorage = {};
+  });
   it("create a storage with an empty name", function () {
     expect(lib.LocalStorage).toThrowError();
   });
   it("create a storage with a proper name", function () {
-    t = new lib.LocalStorage('tmp');
     expect(t).not.toBe(undefined);
   });
   it("set value", function () {
@@ -324,7 +330,7 @@ describe("lib.LocalStorage", function () {
   it("get a not existing value", function () {
     expect(t.get('val111111')).toBe(undefined);
   });
-  it("get a not existing value with default", function () {
+  it("get with a default value", function () {
     expect(t.get('val111111', 555)).toBe(555);
   });
   it("set array", function () {
@@ -334,5 +340,11 @@ describe("lib.LocalStorage", function () {
   it("set object", function () {
     t.set('val1', {a: 1, b: 2});
     expect(t.get('val1')).toEqual({a: 1, b: 2});
+  });
+  it("clean the storage", function () {
+    t.set('val1', 15);
+    expect(t.get('val1')).toBe(15);
+    t.clean();
+    expect(t.get('val1')).toBe(undefined);
   });
 });

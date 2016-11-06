@@ -40,6 +40,7 @@ A standard localStorage wrapper allowing storing array and objects as well
 - **get**: get value from the localStorage by name
 - **set**: put a named value in the localStorage 
 - **remove**: remove a named item from the localStorage
+- **clean**: remove the entire basket from the localStorage
 
 ## License
 

@@ -293,6 +293,12 @@ var lib = (function (module) {
         }
     };
 
+    /**
+     * A Binary Search Tree implementation
+     * @param initialValue
+     * @returns {Tree}
+     * @constructor
+     */
     var Tree = function (initialValue) {
         var _Node = function (val, left, right) {
             this.val = val;
@@ -332,6 +338,13 @@ var lib = (function (module) {
             }
         };
 
+        /**
+         * Find the val in the tree
+         * @param tree
+         * @param val
+         * @returns {boolean}
+         * @private
+         */
         var _findInTree = function (tree, val) {
             if (!tree) {
                 return false;
@@ -345,6 +358,12 @@ var lib = (function (module) {
             }
         };
 
+        /**
+         * Convert the tree into a sorted array
+         * @param result
+         * @param tree
+         * @private
+         */
         var _asArray = function (result, tree) {
             if (!tree) {
                 return;
@@ -356,6 +375,12 @@ var lib = (function (module) {
             _asArray(result, tree.getRight());
         };
 
+        /**
+         * Convert the tree into a reverse sorted array
+         * @param result
+         * @param tree
+         * @private
+         */
         var _asReverseArray = function (result, tree) {
             if (!tree) {
                 return;

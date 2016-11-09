@@ -502,9 +502,10 @@ var lib = (function (module) {
             this.basket = value;
         }
         try {
+            // try to use the built-in localStorage
             this.localStorage = window.localStorage;
         } catch (e) {
-
+            // or use an object-based replacement
             var _store = {};
 
             var _getItem = function (prop, defVal) {

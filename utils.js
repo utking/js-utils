@@ -411,34 +411,62 @@ var lib = (function (module) {
             });
         };
 
+        /**
+         * Replace the default [Object object] output
+         * @returns {string}
+         */
         Tree.prototype.valueOf = function () {
             return 'Tree';
         };
 
+        /**
+         * Replace the default [Object object] output
+         * @returns {string}
+         */
         Tree.prototype.toString = function () {
             return 'Tree';
         };
 
+        /**
+         * Find the val in the tree
+         * @param val
+         * @returns {boolean}
+         */
         Tree.prototype.find = function (val) {
             return _findInTree(_tree, val);
         };
 
+        /**
+         * Return the tree as a sorted array
+         * @returns {Array}
+         */
         Tree.prototype.asArray = function () {
             var result = [];
             _asArray(result, _tree);
             return result;
         };
 
+        /**
+         * Return the tree as a reverse order sorted array
+         * @returns {Array}
+         */
         Tree.prototype.asReverseArray = function () {
             var result = [];
             _asReverseArray(result, _tree);
             return result;
         };
 
+        /**
+         * Forget about the tree's elements
+         */
         Tree.prototype.free = function () {
             _tree = null;
         };
 
+        /**
+         * Free thr tree and fill that with the 'arr' array
+         * @param arr
+         */
         Tree.prototype.fromArray = function (arr) {
             if (Array.isArray(arr)) {
                 Tree.prototype.free();
@@ -448,6 +476,10 @@ var lib = (function (module) {
             }
         };
 
+        /**
+         * Initialize the tree with the initialValue is
+         * that was specified
+         */
         if (initialValue) {
             Tree.prototype.addNode(initialValue);
         }

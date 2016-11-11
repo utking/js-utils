@@ -359,6 +359,86 @@ var lib = (function (module) {
         };
 
         /**
+         * Find the a node in the tree by the value
+         * @param tree
+         * @param val
+         * @returns {object}
+         * @private
+         */
+        var _findNodeByValue = function (tree, val) {
+            var leftNode, rightNode;
+            if (!tree) {
+                // an empty tree
+                return null;
+            }
+            if (tree.value() === val) {
+                // the root node
+                return {
+                    parent: null,
+                    node: tree
+                };
+            } else if (tree.left || tree.right) {
+                // check the current two children
+                leftNode = tree.left;
+                rightNode = tree.right;
+                if (leftNode && leftNode.value() === val) {
+                    // the root node
+                    return {
+                        parent: tree,
+                        node: leftNode
+                    };
+                } else if (rightNode && rightNode.value() === val) {
+                    // the root node
+                    return {
+                        parent: tree,
+                        node: rightNode
+                    };
+                }
+                // there was no luck, go further
+                if (tree.value() > val) {
+                    return _findNodeByValue(tree.left, val);
+                } else if (tree.value() < val) {
+                    return _findNodeByValue(tree.right, val);
+                }
+
+            } else {
+                return null;
+            }
+        };
+
+        var _getMaxNode = function (tree, prev) {
+            if (!tree) {
+                return {
+                    parent: prev ? prev : null,
+                    node: null
+                };
+            }
+            if (!tree.right) {
+                return {
+                    parent: prev ? prev : null,
+                    node: tree
+                };
+            }
+            return _getMaxNode(tree.right, tree);
+        };
+
+        var _getMinNode = function (tree, prev) {
+            if (!tree) {
+                return {
+                    parent: null,
+                    node: null
+                };
+            }
+            if (!tree.left) {
+                return {
+                    parent: prev,
+                    node: tree
+                };
+            }
+            return _getMinNode(tree.left, tree);
+        };
+
+        /**
          * Convert the tree into a sorted array
          * @param result
          * @param tree
@@ -434,6 +514,96 @@ var lib = (function (module) {
          */
         Tree.prototype.find = function (val) {
             return _findInTree(_tree, val);
+        };
+
+
+        Tree.prototype.max = function () {
+            var result = _getMaxNode(_tree, null);
+            return (result && result.node) ? result.node.val : null;
+        };
+
+        Tree.prototype.min = function () {
+            var result = _getMinNode(_tree, null);
+            return (result && result.node) ? result.node.val : null;
+        };
+
+        Tree.prototype.remove = function (val) {
+            var result = _findNodeByValue(_tree, val);
+            // there was no such node
+            if (!result || !result.node) {
+                return false;
+            }
+            // there is such a node.
+            // and it can be simply decreased
+            if (result.node.count > 1) {
+                result.node.count--;
+                return true;
+            }
+            //
+            if (result.node.left && !result.node.right) {
+                // just a left child
+                if (result.parent) {
+                    result.parent.left = result.node.left;
+                } else {
+                    _tree = result.node.left;
+                }
+                result.node = null;
+                return true;
+            }
+            if (result.node.right && !result.node.left) {
+                // just a right child
+                if (result.parent) {
+                    result.parent.left = result.node.right;
+                } else {
+                    _tree = result.node.right;
+                }
+                result.node = null;
+                return true;
+            }
+            if (!result.node.right && !result.node.left) {
+                // no children at all
+                if (result.parent) {
+                    if (result.parent.left === result.node) {
+                        result.parent.left = null;
+                    } else {
+                        result.parent.right = null;
+                    }
+                } else {
+                    _tree = null;
+                }
+                result.node = null;
+                return true;
+            } else {
+                // both children are here
+                // get the max from the left subtree
+                var maxLeft = _getMaxNode(result.node, null);
+                // its parent cannot be null since the both children are here
+                // so, cut the old connection
+                maxLeft.parent.right = null;
+                // update parent-child connection
+                if (result.parent) {
+                    // if there is a parent
+                    // which child to be updated
+                    if (result.parent.left === result.node) {
+                        result.parent.left = maxLeft.node;
+                    } else {
+                        result.parent.right = maxLeft.node;
+                    }
+                } else {
+                    // if the node was the root
+                    _tree = maxLeft.node;
+                }
+                // get the min node from the left subtree
+                var minLeftSubtree = _getMinNode(maxLeft.node, null);
+                // and refresh the subtree with  the right subtree of the node to delete
+                minLeftSubtree.node.left = result.node.right;
+                // find the new min node
+                minLeftSubtree = _getMinNode(minLeftSubtree.node, null);
+                // and append
+                minLeftSubtree.node.left = result.node.left;
+                return true;
+            }
+
         };
 
         /**

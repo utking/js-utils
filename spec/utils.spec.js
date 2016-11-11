@@ -290,7 +290,7 @@ describe("lib.Tree", function () {
       expect(t.asArray()).toEqual(test);
     });
   });
-  it("allow duplicaties in tree", function () {
+  it("allow duplicaties in the tree", function () {
     arr.push(11);
     test.unshift(11);
     var t = new lib.Tree(arr);
@@ -304,6 +304,15 @@ describe("lib.Tree", function () {
     emptyStrings.forEach(function (s) {
       expect(t.asArray()).toEqual([]);
     });
+  });
+  it("Remove elements from the tree with unique elements", function () {
+    var t = new lib.Tree(arr);
+    var el;
+    for (var i = 0; i  < test.length; i++) {
+      el = test[i];
+      t.remove(el);
+      expect(t.asArray()).toEqual(test.slice(i+1));
+    }
   });
 });
 

@@ -320,6 +320,12 @@ var lib = (function (module) {
 
         var _tree = null;
 
+        /**
+         * Insert a node with the 'val' value into the tree
+         * @param tree
+         * @param val
+         * @private
+         */
         var _insertNode = function(tree, val) {
             if (tree.value() === val) {
                 tree.count++;
@@ -406,6 +412,13 @@ var lib = (function (module) {
             }
         };
 
+        /**
+         * Get the node holding the max value in the tree
+         * @param tree
+         * @param prev
+         * @returns {*}
+         * @private
+         */
         var _getMaxNode = function (tree, prev) {
             if (!tree) {
                 return {
@@ -422,6 +435,13 @@ var lib = (function (module) {
             return _getMaxNode(tree.right, tree);
         };
 
+        /**
+         * Get the node holding the min value in the tree
+         * @param tree
+         * @param prev
+         * @returns {*}
+         * @private
+         */
         var _getMinNode = function (tree, prev) {
             if (!tree) {
                 return {
@@ -472,10 +492,16 @@ var lib = (function (module) {
             _asReverseArray(result, tree.getLeft());
         };
 
+        /**
+         * Add a node with the 'val' value into the tree
+         * @param val
+         */
         Tree.prototype.addNode = function (val) {
             if (val === undefined) {
+                // do not add undef values
                 return;
             }
+            // convert the val into an array if it isn't
             var arr = [];
             if (!Array.isArray(val)) {
                 arr.push(val);
@@ -483,6 +509,7 @@ var lib = (function (module) {
                 arr = val;
             }
             arr.forEach(function (item) {
+                // add each element into the tree
                 if (!_tree) {
                     _tree = new _Node(item);
                 } else {
@@ -516,17 +543,31 @@ var lib = (function (module) {
             return _findInTree(_tree, val);
         };
 
-
+        /**
+         * Return the max element in the tree
+         * or null value if the tree is empty
+         * @returns {null}
+         */
         Tree.prototype.max = function () {
             var result = _getMaxNode(_tree, null);
             return (result && result.node) ? result.node.val : null;
         };
 
+        /**
+         * Return the min element in the tree
+         * or null value if the tree is empty
+         * @returns {null}
+         */
         Tree.prototype.min = function () {
             var result = _getMinNode(_tree, null);
             return (result && result.node) ? result.node.val : null;
         };
 
+        /**
+         * Remove an item with the 'val' value
+         * @param val
+         * @returns {boolean}
+         */
         Tree.prototype.remove = function (val) {
             var result = _findNodeByValue(_tree, val);
             // there was no such node

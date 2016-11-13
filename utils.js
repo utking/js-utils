@@ -566,9 +566,10 @@ var lib = (function (module) {
         /**
          * Remove an item with the 'val' value
          * @param val
+         * @param removeAll
          * @returns {boolean}
          */
-        Tree.prototype.remove = function (val) {
+        Tree.prototype.remove = function (val, removeAll) {
             var result = _findNodeByValue(_tree, val);
             // there was no such node
             if (!result || !result.node) {
@@ -576,7 +577,7 @@ var lib = (function (module) {
             }
             // there is such a node.
             // and it can be simply decreased
-            if (result.node.count > 1) {
+            if (!removeAll && result.node.count > 1) {
                 result.node.count--;
                 return true;
             }

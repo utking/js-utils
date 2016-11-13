@@ -314,6 +314,16 @@ describe("lib.Tree", function () {
       expect(t.asArray()).toEqual(test.slice(i+1));
     }
   });
+  it("Remove one element from the tree with duplicate elements", function () {
+    var t = new lib.Tree([1,4,2,2,3]);
+    t.remove(2);
+    expect(t.asArray()).toEqual([1,2,3,4]);
+  });
+  it("Remove all duplicate elements from the tree with duplicate elements", function () {
+    var t = new lib.Tree([1,4,2,2,3]);
+    t.remove(2, true);
+    expect(t.asArray()).toEqual([1,3,4]);
+  });
 });
 
 describe("lib.LocalStorage", function () {

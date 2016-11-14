@@ -24,12 +24,24 @@ Sort:
 - **select**: Select sort
 - **insert**: Insertion sort
 
-*You can use a custom less-than comparator as the second parameter for 
-each of these sorting functions.
+_You can use a custom less-than comparator as the second parameter for 
+each of these sorting functions._
 
 Tree:
 
 A BST (binary search tree) implementation.
+
+- **c-tor**: constructor allowing setting an initial values from an array
+- **free**: clean the tree
+- **addNode**: add a node in the tree
+- **find**: check if the element in the tree
+- **min**: get a min element in the tree
+- **max**: get a max element in the tree
+- **remove**: remove an element (with or w/o all the duplicated) from the tree
+- **asArray**: return an array representation of the tree
+- **asReverseArray**: return a reverse array representation of the tree
+- **fromArray**: clean the tree and re-create it with the values in the array
+
 
 LocalStorage:
 

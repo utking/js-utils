@@ -495,27 +495,27 @@ var lib = (function (module) {
         /**
          * Add a node with the 'val' value into the tree
          * @param val
+         * @return {Tree}
          */
         Tree.prototype.addNode = function (val) {
-            if (val === undefined) {
-                // do not add undef values
-                return;
-            }
-            // convert the val into an array if it isn't
-            var arr = [];
-            if (!Array.isArray(val)) {
-                arr.push(val);
-            } else {
-                arr = val;
-            }
-            arr.forEach(function (item) {
-                // add each element into the tree
-                if (!_tree) {
-                    _tree = new _Node(item);
+            if (val !== undefined) {
+                // convert the val into an array if it isn't
+                var arr = [];
+                if (!Array.isArray(val)) {
+                    arr.push(val);
                 } else {
-                    _insertNode(_tree, item);
+                    arr = val;
                 }
-            });
+                arr.forEach(function (item) {
+                    // add each element into the tree
+                    if (!_tree) {
+                        _tree = new _Node(item);
+                    } else {
+                        _insertNode(_tree, item);
+                    }
+                });
+            }
+            return this;
         };
 
         /**
@@ -567,19 +567,19 @@ var lib = (function (module) {
          * Remove an item with the 'val' value
          * @param val
          * @param removeAll
-         * @returns {boolean}
+         * @returns {Tree}
          */
         Tree.prototype.remove = function (val, removeAll) {
             var result = _findNodeByValue(_tree, val);
             // there was no such node
             if (!result || !result.node) {
-                return false;
+                return this;
             }
             // there is such a node.
             // and it can be simply decreased
             if (!removeAll && result.node.count > 1) {
                 result.node.count--;
-                return true;
+                return this;
             }
             //
             if (result.node.left && !result.node.right) {
@@ -590,7 +590,7 @@ var lib = (function (module) {
                     _tree = result.node.left;
                 }
                 result.node = null;
-                return true;
+                return this;
             }
             if (result.node.right && !result.node.left) {
                 // just a right child
@@ -600,7 +600,7 @@ var lib = (function (module) {
                     _tree = result.node.right;
                 }
                 result.node = null;
-                return true;
+                return this;
             }
             if (!result.node.right && !result.node.left) {
                 // no children at all
@@ -614,7 +614,7 @@ var lib = (function (module) {
                     _tree = null;
                 }
                 result.node = null;
-                return true;
+                return this;
             } else {
                 // both children are here
                 // get the max from the left subtree
@@ -643,7 +643,7 @@ var lib = (function (module) {
                 minLeftSubtree = _getMinNode(minLeftSubtree.node, null);
                 // and append
                 minLeftSubtree.node.left = result.node.left;
-                return true;
+                return this;
             }
 
         };
@@ -670,14 +670,17 @@ var lib = (function (module) {
 
         /**
          * Forget about the tree's elements
+         * @return {Tree}
          */
         Tree.prototype.free = function () {
             _tree = null;
+            return this;
         };
 
         /**
          * Free thr tree and fill that with the 'arr' array
          * @param arr
+         * @return {Tree}
          */
         Tree.prototype.fromArray = function (arr) {
             if (Array.isArray(arr)) {
@@ -686,6 +689,7 @@ var lib = (function (module) {
                     this.addNode(a);
                 }, this);
             }
+            return this;
         };
 
         /**

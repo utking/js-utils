@@ -766,7 +766,8 @@ var lib = (function (module) {
         if (!prop || !prop.charAt) {
             throw new Error('You should specify the property name');
         }
-        return this.localStorage.setItem(this.basket+'.'+prop, JSON.stringify(val));
+        this.localStorage.setItem(this.basket+'.'+prop, JSON.stringify(val));
+        return this;
     };
 
     /**
@@ -802,7 +803,8 @@ var lib = (function (module) {
         if (!prop || !prop.charAt) {
             throw new Error('You should specify the property name');
         }
-        return this.localStorage.removeItem(this.basket+'.'+prop);
+        this.localStorage.removeItem(this.basket+'.'+prop);
+        return this;
     };
 
     /**
@@ -820,6 +822,7 @@ var lib = (function (module) {
         } catch (e) {
             this.localStorage.clean();
         }
+        return this;
     };
 
     /**

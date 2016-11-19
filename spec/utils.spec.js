@@ -324,6 +324,10 @@ describe("lib.Tree", function () {
     t.remove(2, true);
     expect(t.asArray()).toEqual([1,3,4]);
   });
+  it("Test chaining", function () {
+    var t = (new lib.Tree()).fromArray([1,4,2,2,3]).remove(2);
+    expect(t.asArray()).toEqual([1,2,3,4]);
+  });
 });
 
 describe("lib.LocalStorage", function () {

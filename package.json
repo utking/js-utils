@@ -4,7 +4,7 @@
   "description": "JS utils for own projects",
   "main": "utils.js",
   "scripts" : {
-    "test": "jasmine spec/utils.spec.js"
+    "test": "node_modules/jasmine/bin/jasmine.js spec/utils.spec.js"
   },
   "repository": {
     "url": "https://github.com/utking/js-utils.git",

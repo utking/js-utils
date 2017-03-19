@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "JS utils for own projects",
   "main": "utils.js",
+  "scripts" : {
+    "test": "jasmine spec/utils.spec.js"
+  },
   "repository": {
     "url": "https://github.com/utking/js-utils.git",
     "type": "git"

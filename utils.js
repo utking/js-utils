@@ -294,15 +294,15 @@ var lib = (function (module) {
 
         _qSort: function(list, l, r) {
             if (list.length === 0) return;
-            var pivotIndex = _findPivotIndex(l, r - l);
-            _swap(list, pivotIndex, r);
-            var k = _partition(list, l - 1, r, list[r]);
-            _swap(list, k, r);
+            var pivotIndex = SortLib._findPivotIndex(l, r - l);
+            SortLib._swap(list, pivotIndex, r);
+            var k = SortLib._partition(list, l - 1, r, list[r]);
+            SortLib._swap(list, k, r);
             if (k - l > 1) {
-                _qSort(list, l, k - 1);
+                SortLib._qSort(list, l, k - 1);
             }
             if (r - k > 1) {
-                _qSort(list, k + 1, r);
+                SortLib._qSort(list, k + 1, r);
             }
         },
 
@@ -314,9 +314,9 @@ var lib = (function (module) {
             do {
                 while (list[++l] < pivotValue);
                 while (r != 0 && list[--r] > pivotValue);
-                _swap(list, l, r);
+                SortLib._swap(list, l, r);
             } while (l < r);
-                _swap(list, l, r);
+                SortLib._swap(list, l, r);
             return l;
         },
 
@@ -324,11 +324,11 @@ var lib = (function (module) {
             var tmp = list[i];
             list[i] = list[j];
             list[j] = tmp;
-        }
+        },
 
         _quicksort: function(list) {
             var listCopy = list.slice(0);
-            _qSort(listCopy, 0, listCopy.length - 1);
+            SortLib._qSort(listCopy, 0, listCopy.length - 1);
             return listCopy;
         }
     };

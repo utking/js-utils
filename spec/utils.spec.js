@@ -1,5 +1,5 @@
 if (!this.navigator) {
-  var lib = require('../index');
+  var lib = require('../utils');
 }
 
 var items = [

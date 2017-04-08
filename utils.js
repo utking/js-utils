@@ -290,6 +290,46 @@ var lib = (function (module) {
                 result[j+1] = tmp;
             }
             return result;
+        },
+
+        _qSort: function(list, l, r) {
+            if (list.length === 0) return;
+            var pivotIndex = _findPivotIndex(l, r - l);
+            _swap(list, pivotIndex, r);
+            var k = _partition(list, l - 1, r, list[r]);
+            _swap(list, k, r);
+            if (k - l > 1) {
+                _qSort(list, l, k - 1);
+            }
+            if (r - k > 1) {
+                _qSort(list, k + 1, r);
+            }
+        },
+
+        _findPivotIndex: function(base, len) {
+            return base + Math.floor(len/2);
+        },
+
+        _partition: function(list, l, r, pivotValue) {
+            do {
+                while (list[++l] < pivotValue);
+                while (r != 0 && list[--r] > pivotValue);
+                _swap(list, l, r);
+            } while (l < r);
+                _swap(list, l, r);
+            return l;
+        },
+
+        _swap: function(list, i, j) {
+            var tmp = list[i];
+            list[i] = list[j];
+            list[j] = tmp;
+        }
+
+        _quicksort: function(list) {
+            var listCopy = list.slice(0);
+            _qSort(listCopy, 0, listCopy.length - 1);
+            return listCopy;
         }
     };
 
@@ -845,6 +885,7 @@ var lib = (function (module) {
         Sort: {
             merge: SortLib._merge,
             select : SortLib._select,
+            quicksort : SortLib._quicksort,
             insert: SortLib._insert
         },
 

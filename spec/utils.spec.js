@@ -1,5 +1,5 @@
 if (!this.navigator) {
-  var lib = require('../utils');
+  var lib = require('../index');
 }
 
 var items = [
@@ -226,6 +226,11 @@ describe("lib.Sort", function () {
   it("merge sort array with custom comparator", function () {
     arrays.forEach(function (a) {
       expect(lib.Sort.merge(a.src, function (a,b) { return a < b; } )).toEqual(a.test);
+    });
+  });
+  it("quicksort array", function () {
+    arrays.forEach(function (a) {
+      expect(lib.Sort.quicksort(a.src)).toEqual(a.test);
     });
   });
   it("select sort array", function () {

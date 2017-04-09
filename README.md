@@ -23,6 +23,7 @@ Sort:
 - **merge**: Merge sort
 - **select**: Select sort
 - **insert**: Insertion sort
+- **quicksort**: Quicksort
 
 _You can use a custom less-than comparator as the second parameter for 
 each of these sorting functions._

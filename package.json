@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "description": "JS utils for own projects",
   "main": "utils.js",
-  "scripts" : {
-    "test": "node_modules/jasmine/bin/jasmine.js spec/utils.spec.js"
+  "scripts": {
+    "test": "node ./node_modules/jasmine/bin/jasmine.js spec/utils.spec.js"
   },
   "repository": {
     "url": "https://github.com/utking/js-utils.git",
